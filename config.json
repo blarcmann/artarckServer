@@ -1,0 +1,24 @@
+{
+    "development": {
+        "config_id": "development",
+        "name": "artarckrc",
+        "description": "marketplace for art",
+        "port": 3000,
+        "dbname": "artarckrc",
+        "dburl": "mongodb://admin:artarckrcadmin1@ds151612.mlab.com:51612/artarckrc"
+    },
+    "testing": {
+        "config_id": "testing",
+        "database": "artarcksecured"
+    },
+    "staging": {
+        "config_id": "staging",
+        "node_port": 8080,
+        "database": "artarcksecured"
+    },
+    "production": {
+        "config_id": "production",
+        "node_port": 8080,
+        "database": "artarcksecured"
+    }
+}
