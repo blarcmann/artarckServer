@@ -5,6 +5,7 @@
         "description": "marketplace for art",
         "port": 3000,
         "dbname": "artarckrc",
+        "key": "!@#qweASDzxc",
         "dburl": "mongodb://admin:artarckrcadmin1@ds151612.mlab.com:51612/artarckrc"
     },
     "testing": {
