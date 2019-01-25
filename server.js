@@ -17,6 +17,7 @@ mongoose.connect(config.development.dburl,{useNewUrlParser: true}, function(err)
         console.log('Connected to db');
     }
 });
+mongoose.set('useCreateIndex', true);
 
 
 
