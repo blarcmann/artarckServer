@@ -14,7 +14,7 @@ mongoose.connect(config.development.dburl,{useNewUrlParser: true}, function(err)
     if (err) {
         console.log(err);
     } else {
-        console.log('Connected to db');
+        console.log('Connected to a shitty db');
     }
 });
 mongoose.set('useCreateIndex', true);
@@ -27,6 +27,9 @@ app.use(morgan('dev'));
 app.use(cors());
 
 const userRoutes = require('./routes/account');
+const mainRoutes = require('./routes/main');
+
+app.use('/api', mainRoutes);
 app.use('/api/accounts', userRoutes);
 
 
