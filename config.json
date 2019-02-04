@@ -6,7 +6,9 @@
         "port": 3000,
         "dbname": "artarckrc",
         "key": "!@#qweASDzxc",
-        "dburl": "mongodb://admin:artarckrcadmin1@ds151612.mlab.com:51612/artarckrc"
+        "dburl": "mongodb://admin:artarckrcadmin1@ds151612.mlab.com:51612/artarckrc",
+        "awsuserSecretAccesskey": "7XWaRcxuO9S1Ejsl6Alsp4c6p2lwpZCB+0Ut2zfn",
+        "awsuserKeyID": "AKIAIQHMNZOB6PPSQRPQ"
     },
     "testing": {
         "config_id": "testing",
