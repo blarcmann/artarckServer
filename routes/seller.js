@@ -71,9 +71,9 @@ router.route('/products')
             let product = new Product();
             product.owner = '5c4aef8431d0682b4727eb29';
             product.category = '5c4e36cb68787d1fe3ed5e68';
-            product.image = faker.image.nature;
+            product.image = faker.image.nature();
             product.title = faker.commerce.productName();
-            product.description = faker.lorem.sentences();
+            product.description = faker.random.words();
             product.price = faker.commerce.price();
             product.save()
         }

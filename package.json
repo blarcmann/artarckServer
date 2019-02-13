@@ -9,6 +9,7 @@
   "author": "yemiOdetola",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.1",
     "aws-sdk": "^2.395.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
