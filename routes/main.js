@@ -30,6 +30,12 @@ router.get('/products', (req, res, next) => {
     ], function (err, results) {
         let totalProducts = results[0];
         let products = results[1];
+        if(err) {
+            res.json({
+                success: false,
+                message: 'Sorry, Wasn\'t able to get the products'
+            })
+        }
         res.json({
             success: true,
             message: 'Successfully returned products',
