@@ -150,7 +150,6 @@ router.post('/review', checkJWT, (req, res, next) => {
         function (callback) {
             Product.findOne({ _id: req.body.productId }, (err, product) => {
                 if (product) {
-                    console.log(product);
                     callback(err, product);
                 }
             })
@@ -176,7 +175,5 @@ router.post('/review', checkJWT, (req, res, next) => {
         }
     ]);
 });
-
-
 
 module.exports = router;
