@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const deepPopulate = require('mongoose-deep-populate')(mongoose);
 
-const productSchema = new Schema({
+const ProductSchema = new Schema({
+    reviews: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Review'
+    }],
     category: {
         type: Schema.Types.ObjectId,
         ref: 'Category'
@@ -18,6 +23,26 @@ const productSchema = new Schema({
         type: Date,
         default: Date.now
     }
+}, {
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true }
 });
 
-module.exports = mongoose.model('Product', productSchema);
+ProductSchema.virtual('averageRating')
+    .get(function() {
+        let rating = 0;
+        if(this.reviews.length == 0) {
+            rating = 0;
+        } else {
+            this.reviews.map((review) => {
+                rating += review.rating
+            });
+            rating = rating / this.reviews.length
+        }
+        return rating;
+    });
+
+
+ProductSchema.plugin(deepPopulate);
+
+module.exports = mongoose.model('Product', ProductSchema);
