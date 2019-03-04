@@ -6,8 +6,6 @@ const cors = require('cors');
 
 const config = require('./config.json');
 
-
-
 const app = express();
 
 mongoose.connect(config.development.dburl,{useNewUrlParser: true}, function(err) {
