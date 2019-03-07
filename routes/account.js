@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const checkJWT = require('../middlewares/check-jwt');
 
 const User = require('../models/user');
+const Order = require('../models/order');
 const config = require('../config');
 
 
@@ -90,7 +91,7 @@ router.route('/profile')
             if (err) {
                 return next(err);
             }
-            if(req.body.name) {
+            if (req.body.name) {
                 user.name = req.body.name
             }
             if (req.body.email) {
@@ -122,7 +123,7 @@ router.route('/address')
                     success: true,
                     message: 'Successfully authenticated your token',
                     address: user.address
-                }); 
+                });
             }
         })
     })
@@ -140,13 +141,13 @@ router.route('/address')
             if (req.body.city) {
                 user.address.city = req.body.city
             }
-            if(req.body.postalCode) {
+            if (req.body.postalCode) {
                 user.address.postalCode = req.body.postalCode
             }
-            if(req.body.state) {
+            if (req.body.state) {
                 user.address.state = req.body.state
             }
-            if(req.body.country) {
+            if (req.body.country) {
                 user.address.country = req.body.country
             }
 
@@ -158,7 +159,45 @@ router.route('/address')
         });
     });
 
+router.get('/orders', checkJWT, (req, res, next) => {
+    Order.find({ owner: req.decoded.user._id })
+        .populate('products.product')
+        .populate('owner')
+        .exec((err, orders) => {
+            if (err) {
+                res.json({
+                    success: false,
+                    message: 'Couldn\'t find your order'
+                });
+            } else {
+                res.json({
+                    success: true,
+                    message: 'found your order',
+                    orders: orders
+                });
+            }
+        });
+});
 
+router.get('/orders/:id', checkJWT, (req, res, next) => {
+    Order.findOne({ _id: req.params.id })
+        .deepPopulate('products.product.owner')
+        .populate('owner')
+        .exec((err, orders) => {
+            if (err) {
+                res.json({
+                    success: false,
+                    message: 'Couldn\'t find your order'
+                });
+            } else {
+                res.json({
+                    success: true,
+                    message: 'found your order',
+                    orders: orders
+                });
+            }
+        });
+});
 
 
 module.exports = router;

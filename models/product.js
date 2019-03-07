@@ -51,8 +51,8 @@ ProductSchema.plugin(mongooseAlgolia, {
     indexName: 'artarckrc',
     selector: '_id reviews category owner image title description price created',
     populate: {
-        path: 'owner reviews',
-        slect: 'name rating'
+        path: 'owner reviews category',
+        slect: 'name rating name'
     },
     defaults: {
         author: 'unknown'
@@ -82,6 +82,6 @@ ProductSchema.plugin(mongooseAlgolia, {
 let Model = mongoose.model('Product', ProductSchema);
 Model.SyncToAlgolia();
 Model.SetAlgoliaSettings({
-    searchableAttributes: ['title']
+    searchableAttributes: ['title', 'owner', 'category']
 })
 module.exports = Model;

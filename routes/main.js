@@ -168,7 +168,7 @@ router.post('/review', checkJWT, (req, res, next) => {
 
             product.reviews.push(review._id);
             product.save();
-            review.save(); 
+            review.save();
             res.json({
                 success: true,
                 message: 'Successfully added the review'
@@ -180,19 +180,18 @@ router.post('/review', checkJWT, (req, res, next) => {
 router.post('/payment', checkJWT, (req, res, next) => {
     const stripeToken = req.body.stripeToken;
     const currentCharges = Math.round(req.body.totalPrice * 100);
-
     stripe.customers
         .create({
             source: stripeToken.id
         })
-        .then(function(customer) {
+        .then(function (customer) {
             return stripe.chargers.create({
                 amount: currentCharges,
                 currency: 'usd',
                 customer: customer.id
             });
         })
-        .then(function(charge) {
+        .then(function (charge) {
             const products = req.bosy.products;
 
             let order = new Order();
@@ -206,15 +205,13 @@ router.post('/payment', checkJWT, (req, res, next) => {
                 });
             });
 
-        order.save();
-        res.json({
-            success: true,
-            message: 'Payment Successful'
-        })
-
-
-        })
-})
+            order.save();
+            res.json({
+                success: true,
+                message: 'Payment Successful'
+            });
+        });
+});
 
 
 module.exports = router;
