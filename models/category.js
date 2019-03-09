@@ -7,6 +7,10 @@ const CategorySchema = new Schema({
         unique: true,
         lowercase: true
     },
+    products: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Product'
+    }],
     created: {
         type: Date,
         default: Date.now
