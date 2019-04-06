@@ -230,5 +230,4 @@ router.post('/payment', checkJWT, (req, res, next) => {
         });
 });
 
-
 module.exports = router;
