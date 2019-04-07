@@ -30,6 +30,8 @@ router.get('/q?', (req, res, next) => {
         // Product.find({ $text: { $search: new RegExp(`^${req.query.queryParam}$`) } })
             // .skip(12)
             // .limit(12)
+            .populate('owner')
+            .deepPopulate('owner.name')
             .exec((error, results) => {
                 if (error) {
                     res.json({
