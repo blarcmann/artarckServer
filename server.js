@@ -9,7 +9,7 @@ const fileUpload = require('express-fileupload');
 
 const app = express();
 
-mongoose.connect(process.env.DB_URI, { useNewUrlParser: true }, function (err) {
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, function (err) {
     if (err) {
         console.log(err);
     } else {
