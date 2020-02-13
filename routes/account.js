@@ -12,7 +12,6 @@ router.post('/signup', (req, res, next) => {
     user.password = req.body.password;
     user.picture = user.gravatar();
     user.isSeller = req.body.isSeller;
-
     User.findOne({ email: req.body.email }, (err, existingUser) => {
         if (existingUser) {
             res.json({
@@ -23,7 +22,7 @@ router.post('/signup', (req, res, next) => {
             user.save();
             let token = jwt.sign({
                 user: user
-            }, process.env.KEY, {
+            }, process.env.DB_SECRET, {
                 expiresIn: '7d'
             });
             res.json({
@@ -52,7 +51,7 @@ router.post('/login', (req, res, next) => {
             } else {
                 var token = jwt.sign({
                     user: user
-                }, process.env.KEY, {
+                }, process.env.DB_SECRET, {
                     expiresIn: '7d'
                 });
                 res.json({
