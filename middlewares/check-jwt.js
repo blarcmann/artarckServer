@@ -6,7 +6,7 @@ let config = configuration.development;
 module.exports = (req, res, next) => {
     let token = req.headers['authorization'];
     if (token) {
-        jwt.verify(token, process.env.KEY, (err, decoded) => {
+        jwt.verify(token, process.env.DB_SECRET, (err, decoded) => {
             if (err) {
                 res.json({
                     success: false,
