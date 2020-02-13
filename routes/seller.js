@@ -1,14 +1,21 @@
 const router = require('express').Router();
 const Product = require('../models/product');
 const config = require('../config');
+const cloudinary = require('cloudinary').v2;
 const devConfig = config.development;
 const checkJWT = require('../middlewares/check-jwt');
 const faker = require('faker');
 
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+});
+
 const aws = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
-// let s3 = new aws.S3();
 
 var s3 = new aws.S3({
     accessKeyId: devConfig.awsuserKeyID,
@@ -28,6 +35,48 @@ var upload = multer({
     })
 });
 
+router.post('/create_product', checkJWT, (req, res) => {
+    if (req.files.product_picture) {
+        const file = req.files.product_picture;
+        cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
+            if (err) {
+                console.log('error occured while uploading', err);
+                return res.status(501).json({
+                    success: false,
+                    message: 'error occured while uploading to cloudinary'
+                })
+            }
+            let img_url = result.url;
+            let product = new Product({
+                owner: req.decoded.user._id,
+                category: req.body.categoryId,
+                description: req.body.description,
+                title: req.body.title,
+                price: req.body.price,
+                image: img_url
+            });
+            product.save();
+            return res.status(201).json({
+                success: true,
+                message: 'Successfully added the product',
+            });
+        })
+    } else {
+        let product = new Product({
+            owner: req.decoded.user._id,
+            category: req.body.categoryId,
+            description: req.body.description,
+            title: req.body.title,
+            price: req.body.price,
+            image: ''
+        });
+        product.save();
+        return res.status(201).json({
+            success: true,
+            message: 'Successfully added the product',
+        });
+    }
+});
 
 router.route('/products')
     .post([checkJWT, upload.single('product_picture')], (req, res, next) => {
@@ -41,7 +90,7 @@ router.route('/products')
         product.save();
         res.json({
             success: true,
-            message: 'Successfully Added the product'
+            message: 'Successfully qdded the product'
         });
 
     })

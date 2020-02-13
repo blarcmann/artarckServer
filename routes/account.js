@@ -1,10 +1,8 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const checkJWT = require('../middlewares/check-jwt');
-
 const User = require('../models/user');
 const Order = require('../models/order');
-const config = require('../config');
 
 
 router.post('/signup', (req, res, next) => {
@@ -25,9 +23,9 @@ router.post('/signup', (req, res, next) => {
             user.save();
             let token = jwt.sign({
                 user: user
-            }, config.development.key, {
-                    expiresIn: '7d'
-                });
+            }, process.env.KEY, {
+                expiresIn: '7d'
+            });
             res.json({
                 success: true,
                 message: 'Your Account is successfully created',
@@ -55,9 +53,9 @@ router.post('/login', (req, res, next) => {
             } else {
                 var token = jwt.sign({
                     user: user
-                }, config.development.key, {
-                        expiresIn: '7d'
-                    });
+                }, process.env.KEY, {
+                    expiresIn: '7d'
+                });
                 res.json({
                     success: true,
                     message: 'Sucessfully logged in. redirecting...',

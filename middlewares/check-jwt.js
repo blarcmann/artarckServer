@@ -5,9 +5,9 @@ let config = configuration.development;
 
 module.exports = (req, res, next) => {
     let token = req.headers['authorization'];
-    if(token) {
-        jwt.verify(token, config.key, (err, decoded) => {
-            if(err) {
+    if (token) {
+        jwt.verify(token, process.env.KEY, (err, decoded) => {
+            if (err) {
                 res.json({
                     success: false,
                     message: 'Failed to Authenticate token'
@@ -24,8 +24,3 @@ module.exports = (req, res, next) => {
         });
     }
 }
-
-// o.c cousant connect
-// android && ionic 
-// dropped cos of on-site fully
-//2-3 days onsite preffered ()
