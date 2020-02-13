@@ -35,7 +35,6 @@ router.post('/signup', (req, res, next) => {
     });
 });
 
-
 router.post('/login', (req, res, next) => {
     User.findOne({ email: req.body.email }, (err, user) => {
         if (!user) {
@@ -65,7 +64,6 @@ router.post('/login', (req, res, next) => {
         }
     });
 });
-
 
 router.route('/profile')
     .get(checkJWT, (req, res, next) => {
@@ -117,9 +115,10 @@ router.route('/address')
                     message: 'An Error Occured. Please try again later'
                 });
             } else {
+                console.log(user);
                 res.json({
                     success: true,
-                    message: 'Successfully authenticated your token',
+                    message: 'Address',
                     address: user.address
                 });
             }
@@ -130,6 +129,7 @@ router.route('/address')
             if (err) {
                 return next(err);
             }
+            console.log(req.body);
             if (req.body.address1) {
                 user.address.address1 = req.body.address1
             }
@@ -148,7 +148,6 @@ router.route('/address')
             if (req.body.country) {
                 user.address.country = req.body.country
             }
-
             user.save();
             res.json({
                 success: true,

@@ -115,20 +115,17 @@ router.route('/products')
     });
 
 // Faker for data pop
-router.get('/faker/test', (req, res, next) => {
-    for (let i = 0; i < 33; i++) {
+router.get('/faker', () => {
+    for (let i = 0; i < 5; i++) {
         let product = new Product();
         product.owner = '5c4aef8431d0682b4727eb29';
         product.category = '5c4e36cb68787d1fe3ed5e68';
-        product.image = faker.image.abstract();
+        product.image = faker.image.animals();
         product.title = faker.commerce.productName();
         product.description = faker.lorem.paragraph();
         product.price = faker.commerce.price();
         product.save();
     }
-    res.json({
-        message: 'Successfully added dummy products'
-    })
 })
 
 module.exports = router;

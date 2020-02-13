@@ -140,7 +140,6 @@ router.get('/categories/:id', (req, res, next) => {
     });
 });
 
-
 router.get('/product/:id', (req, res, next) => {
     Product.findById({ _id: req.params.id })
         .populate('category')
@@ -161,7 +160,6 @@ router.get('/product/:id', (req, res, next) => {
             }
         });
 });
-
 
 router.post('/review', checkJWT, (req, res, next) => {
     async.waterfall([
