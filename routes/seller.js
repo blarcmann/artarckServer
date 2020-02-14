@@ -118,8 +118,8 @@ router.route('/products')
 router.get('/faker', () => {
     for (let i = 0; i < 5; i++) {
         let product = new Product();
-        product.owner = '5c4aef8431d0682b4727eb29';
-        product.category = '5c4e36cb68787d1fe3ed5e68';
+        product.owner = '5e45d057a211cb0004582477';
+        product.category = '5c5df72290c0eb4cdf5f1ecf';
         product.image = faker.image.animals();
         product.title = faker.commerce.productName();
         product.description = faker.lorem.paragraph();
